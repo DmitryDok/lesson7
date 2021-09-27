@@ -1,10 +1,10 @@
-FROM maven:3.5.2-jdk-8-alpine AS MAVEN_TOOL_CHAIN
+FROM openjdk:11-jdk
 
-RUN git clone https://github.com/boxfuse/boxfuse-sample-java-war-hello/ /tmp/
-WORKDIR /tmp/boxfuse-sample-java-war-hello/
+RUN apt update && apt install git maven -y
+RUN cd /tmp
+RUN git clone https://github.com/boxfuse/boxfuse-sample-java-war-hello
+RUN cd boxfuse-sample-java-war-hello
 RUN mvn package
+RUN copy /tmp/boxfuse-sample-java-war-hello/target/hello-1.0.war /var/lib/tomcat9/webapps/
 
-FROM tomcat:9.0-jre8-alpine
-COPY --from=MAVEN_TOOL_CHAIN /tmp/boxfuse-sample-java-war-hello/target/hello*.war $CATALINA_HOME/webapps/hello.war
-
-HEALTHCHECK --interval=1m --timeout=3s CMD wget --quiet --tries=1 --spider http://localhost:8080/hello/ || exit 1
+CMD ["mvn"]
