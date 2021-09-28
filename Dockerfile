@@ -6,7 +6,7 @@ RUN git clone https://github.com/boxfuse/boxfuse-sample-java-war-hello.git
 WORKDIR /boxfuse-sample-java-war-hello/
 VOLUME /webapp/ /usr/local/webapp/
 RUN mvn package
-RUN cp ./target/hello*.war /usr/local/webapps/
+RUN cp ./target/hello*.war /usr/local/webapp/
 
 FROM alpine
 RUN apt update && apt install wget -y
