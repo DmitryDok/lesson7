@@ -3,10 +3,11 @@ ENV TZ=Europe/Minsk
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN apt update && apt install git default-jdk maven -y
 RUN git clone https://github.com/boxfuse/boxfuse-sample-java-war-hello.git
-WORKDIR /boxfuse-sample-java-war-hello/
-VOLUME /webapp/ /usr/local/webapp/
+RUN mkdir webapp
+VOLUME /webapp
+WORKDIR /boxfuse-sample-java-war-hello
 RUN mvn package
-RUN cp ./target/hello*.war /usr/local/webapp/
+RUN cp ./target/hello*.war /usr/local/webapp
 
 FROM alpine
 RUN apk update
