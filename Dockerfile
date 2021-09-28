@@ -1,10 +1,13 @@
-FROM openjdk:11-jdk
-
-RUN apt update && apt install git maven -y
-RUN cd /tmp
+FROM ubuntu
+ENV TZ=Europe/Minsk
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+RUN apt update && apt install wget git default-jdk maven -y
+RUN wget https://ftp.byfly.by/pub/apache.org/tomcat/tomcat-9/v9.0.53/bin/apache-tomcat-9.0.53.tar.gz
+RUN tar zxvf apache-tomcat-*.tar.gz -C /usr/local/
 RUN git clone https://github.com/boxfuse/boxfuse-sample-java-war-hello.git
-WORKDIR /tmp/boxfuse-sample-java-war-hello/
+WORKDIR /boxfuse-sample-java-war-hello/
 RUN mvn package
-RUN copy /tmp/boxfuse-sample-java-war-hello/target/hello-1.0.war /var/lib/tomcat9/webapps/
+RUN cp ./target/hello*.war /usr/local/apache-tomcat-9.0.53/webapps/
 
-CMD ["mvn"]
+EXPOSE 8080
+CMD ["/usr/local/apache-tomcat-9.0.53/bin/catalina.sh", "run"]
