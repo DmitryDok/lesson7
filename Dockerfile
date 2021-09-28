@@ -9,6 +9,7 @@ RUN mvn package
 FROM alpine
 RUN apk update
 RUN apk add wget
+RUN ark add openjdk8-jre-base
 RUN wget https://ftp.byfly.by/pub/apache.org/tomcat/tomcat-9/v9.0.53/bin/apache-tomcat-9.0.53.tar.gz
 RUN tar zxvf apache-tomcat-*.tar.gz -C /usr/local/
 COPY --from=webapp /boxfuse-sample-java-war-hello/target/hello*.war /usr/local/apache-tomcat-9.0.53/webapps/
