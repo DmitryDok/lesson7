@@ -9,7 +9,8 @@ RUN mvn package
 RUN cp ./target/hello*.war /usr/local/webapp/
 
 FROM alpine
-RUN apk update && apk add wget -y
+RUN apk update
+RUN apk add wget
 RUN wget https://ftp.byfly.by/pub/apache.org/tomcat/tomcat-9/v9.0.53/bin/apache-tomcat-9.0.53.tar.gz
 RUN tar zxvf apache-tomcat-*.tar.gz -C /usr/local/
 VOLUME /webapp/ /usr/local/webapp/
