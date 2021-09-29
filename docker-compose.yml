@@ -1,19 +1,12 @@
-version: '3'
+version: '2'
 services:
   app:
     build: app/
     volumes:
-      - data:/usr/data
-    command: cp /boxfuse-sample-java-war-hello/target/hello*.war /usr/data
+      - ./data:/data
   web:
     build: web/
     volumes:
-      - data:/usr/data
+      - ./data:/data
     ports:
       - 8080:8080
-    depends_on:
-      - app
-    command: cp /usr/data/hello*.war /$TOMCAT_HOME/webapps/
-
-volumes:
-  data:
