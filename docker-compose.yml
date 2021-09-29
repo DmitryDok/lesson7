@@ -1,9 +1,9 @@
-version: '2'
+version: '3'
 services:
   build:
     image: ubuntu
     volumes:
-      - ./data:/usr/data
+      - data:/usr/data
     command: echo Europe/Minsk > /etc/timezone
     command: apt update && apt install git default-jdk maven -y
     command: it clone https://github.com/boxfuse/boxfuse-sample-java-war-hello.git
@@ -12,11 +12,14 @@ services:
 
   web:
     image: davidcaste/alpine-tomcat:jre7tomcat8
-    volume:
-      - ./data:/usr/data
+    volumes:
+      - data:/usr/data
     ports:
       - 8080:8080
     depends_on:
       - build
     command: cp /usr/datahello*.war /$TOMCAT_HOME/webapps/
     command: /opt/tomcat/bin/catalina.sh run
+
+volumes:
+  data:
