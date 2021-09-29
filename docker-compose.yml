@@ -7,7 +7,7 @@ services:
     command: echo Europe/Minsk > /etc/timezone
     command: apt update && apt install git default-jdk maven -y
     command: it clone https://github.com/boxfuse/boxfuse-sample-java-war-hello.git
-    command: mvn package -f boxfuse-sample-java-war-hello/pom.xml
+    command: mvn package -f /boxfuse-sample-java-war-hello/pom.xml
     command: cp /boxfuse-sample-java-war-hello/target/hello*.war /usr/data
 
   web:
