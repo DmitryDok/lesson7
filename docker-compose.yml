@@ -4,8 +4,6 @@ services:
     build: app/
     volumes:
       - appdata:/boxfuse-sample-java-war-hello/target
-    command:
-      - /bin/bash
   web:
     build: web/
     volumes:
