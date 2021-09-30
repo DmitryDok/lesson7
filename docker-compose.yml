@@ -1,12 +1,24 @@
-version: '2'
+version: '3'
 services:
   app:
-    build: app/
+    image: ubuntu
     volumes:
-      - ./data:/data
+      - appdata:/usr/data
+    command:
+      - echo Europe/Minsk > /etc/timezone
+      - apt update && apt install git default-jdk maven -y
+      - git clone https://github.com/boxfuse/boxfuse-sample-java-war-hello.git
+      - mvn package -f /boxfuse-sample-java-war-hello/pom.xml
+      - cp /boxfuse-sample-java-war-hello/target/hello-1.0.war /usr/data
+      - /bin/bash
   web:
-    build: web/
+    image: davidcaste/alpine-tomcat:jre7tomcat8
     volumes:
-      - ./data:/data
+      - appdata:/usr/data
     ports:
       - 8080:8080
+    command:
+      - cp /usr/data/hello-1.0.war /opt/tomcat/webapps/
+      - /opt/tomcat/bin/catalina.sh run
+volumes:
+  appdata:
