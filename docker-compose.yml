@@ -3,19 +3,16 @@ services:
   app:
     build: app/
     volumes:
-      - appdata:/usr/data
+      - appdata:/boxfuse-sample-java-war-hello/target
     command:
       - /bin/bash
   web:
     build: web/
     volumes:
-      - appdata:/usr/data
+      - appdata:/opt/tomcat/webapps/
     ports:
       - 8080:8080
     depends_on:
       - app
-    command:
-      - cp /usr/data/hello-1.0.war /opt/tomcat/webapps/
-      - /opt/tomcat/bin/catalina.sh run
 volumes:
   appdata:
