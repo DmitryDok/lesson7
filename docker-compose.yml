@@ -18,6 +18,8 @@ services:
       - appdata:/usr/data
     ports:
       - 8080:8080
+    depends_on:
+      - app
     command:
       - cp /usr/data/hello-1.0.war /opt/tomcat/webapps/
       - /opt/tomcat/bin/catalina.sh run
