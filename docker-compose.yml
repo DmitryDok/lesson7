@@ -5,7 +5,7 @@ services:
     volumes:
       - appdata:/usr/data
     command:
-      - TZ=Europe/Minsk
+      - env TZ=Europe/Minsk
       - ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
       - apt update && apt install git default-jdk maven -y
       - git clone https://github.com/boxfuse/boxfuse-sample-java-war-hello.git
