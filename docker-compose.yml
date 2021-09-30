@@ -5,7 +5,7 @@ services:
     volumes:
       - appdata:/usr/data
     command:
-      - apt update && apt install git default-jdk maven -y
+      - apt update && apt install git maven -y
       - git clone https://github.com/boxfuse/boxfuse-sample-java-war-hello.git
       - mvn package -f /boxfuse-sample-java-war-hello/pom.xml
       - cp /boxfuse-sample-java-war-hello/target/hello-1.0.war /usr/data
